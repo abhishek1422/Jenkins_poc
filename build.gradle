@@ -1,0 +1,48 @@
+group 'Group_id_1'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'groovy'
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.3.11'
+    compile group: 'org.yaml', name: 'snakeyaml', version: '1.8'
+    testCompile group: 'org.testng', name: 'testng', version:'6.8.8'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'io.rest-assured:json-path:3.0.6'
+    compile 'io.rest-assured:json-schema-validator:3.1.1'
+    compile group: 'com.jayway.restassured', name: 'rest-assured', version: '2.6.0'
+    compile 'mysql:mysql-connector-java:6.0.+'
+    compile group: 'com.relevantcodes', name: 'extentreports', version: '2.41.2'
+    compile group: 'com.google.inject', name: 'guice',version: '4.2.0'
+    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.11'
+    compile group: 'org.elasticsearch.client', name: 'transport', version: '5.5.3'
+    compile group: 'org.elasticsearch.client', name: 'rest', version: '5.5.3'
+    compile group: 'javainetlocator', name: 'inetaddresslocator', version: '2.18'
+    compile group: 'org.json', name: 'json', version: '20090211'
+    compile group: 'org.elasticsearch', name: 'elasticsearch', version: '5.6.4'
+    compile group: 'org.elasticsearch.client', name: 'elasticsearch-rest-high-level-client', version: '5.6.4'
+    //compile group: 'org.elasticsearch.client', name: 'elasticsearch-rest-client', version: '5.6.0'
+
+    //compile group: 'javax.json', name: 'javax.json-api', version: '1.0-b01'
+    // compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+   // compile group: 'com.manh.cp', name: 'manh-cp-extended-starter', version: '0.4.0-SNAPSHOT'
+    compile group: 'org.springframework', name: 'spring-beans', version: '3.0.5.RELEASE'
+    compile group: 'org.springframework', name: 'spring-context', version: '3.0.5.RELEASE'
+    compile group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13'
+    compile group: 'commons-io', name: 'commons-io', version: '2.4'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
+   // compile group: 'com.aspose', name: 'aspose-pdf', version: '16.11.0'
+}
+
+test{
+    useTestNG(){
+        suites 'src/test/resources/testng.xml'
+    }
+}
