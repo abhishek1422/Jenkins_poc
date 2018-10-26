@@ -1,6 +1,8 @@
-var json = require('C:/Users/anagpurkar/Desktop/test_automation-master/src/test/resources/jsonOutput.json');
+//var json = require('C:/Users/anagpurkar/Desktop/Artifact_id_1/src/test/resources/jsonOutput.json');
 
-var id=json.hits.hits[0]._id;
+//var id=json.hits.hits[0]._id;
+var id="Batch Monitor";
+//var id=json.dashboardInfo[0].dashboardID1;
 console.log(id);
 
 var url ='http://logs.adds.manhdev.com/app/kibana#/dashboard/'+id+'?_g=()';

@@ -1,45 +1,43 @@
 package manh.framework.automation.elastic;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import org.json.JSONObject;
+
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class KibanaDashBoardTest {
 
     public static void main(String[] args) throws Exception {
+
         ElasticSearchQuery elasticSearchQuery=new ElasticSearchQuery();
+        Properties prop = new Properties();
+        InputStream input = null;
+        input = new FileInputStream("C:\\Users\\anagpurkar\\Desktop\\Artifact_id_1\\src\\test\\resources\\dashboard.properties");
+        prop.load(input);
+        input.close();
+
+        ArrayList<String> dashName = new ArrayList<>();
+        int i=1;
+        for (String property: prop.stringPropertyNames()
+             ) {
+
+
+
+           dashName.add(prop.getProperty("dashboardName"+i));
+            i++; }
+
+
         try {
 
-            ArrayList<String> id= new ArrayList<>() ;
-            id.add("EI-PAYLOAD-WAIT-TIME-STATISTICS");
-            id.add("EI-JOURNAL-ENTRY-COUNT-STATISTICS");
-            id.add("EI-JOURNAL-ENTRY-COUNT-STATISTICS-BY-ENDPOINT");
-
-            for (String str: id) {
-
-                //String str="Batch Monitor";
-                System.out.println(elasticSearchQuery.kibanaDashBoradID_Rest(str));
-
-                String json = elasticSearchQuery.kibanaDashBoradID_Rest(str);
-
-                BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\anagpurkar\\Desktop\\test_automation-master\\src\\test\\resources\\jsonOutput.json"));
-                writer.write(json);
-
-                writer.close();
-
-
-                /*JSONObject jsonObject = new JSONObject(json);
-                JSONObject hits = (JSONObject) jsonObject.get("hits");
-                JSONArray hitsInner = (JSONArray) hits.get("hits");
-                JSONObject idValue = (JSONObject) hitsInner.get(0);
-                System.out.println(idValue.get("_id"));*/
-
-                ExecutePhantomJS.DashboardImageCapture();
-                ExecutePhantomJS.CloseCommandPrompt();
+           JSONObject json =elasticSearchQuery.kibanaDashBoradID_Rest(dashName);
+           ExecutePhantomJS.DashboardImageCapture(json);
+           ExecutePhantomJS.CloseCommandPrompt();
             }
-            Thread.sleep(90000);
-            ImagetoPDF.PDFConvertor();
-        }
+           // Thread.sleep(90000);
+            //ImagetoPDF.PDFConvertor();
+
         catch (Exception e){
             System.out.println("Exception in main thread");
             e.printStackTrace();

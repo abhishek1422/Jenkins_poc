@@ -28,17 +28,16 @@ dependencies {
     compile group: 'org.json', name: 'json', version: '20090211'
     compile group: 'org.elasticsearch', name: 'elasticsearch', version: '5.6.4'
     compile group: 'org.elasticsearch.client', name: 'elasticsearch-rest-high-level-client', version: '5.6.4'
-    //compile group: 'org.elasticsearch.client', name: 'elasticsearch-rest-client', version: '5.6.0'
-
-    //compile group: 'javax.json', name: 'javax.json-api', version: '1.0-b01'
-    // compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
-   // compile group: 'com.manh.cp', name: 'manh-cp-extended-starter', version: '0.4.0-SNAPSHOT'
     compile group: 'org.springframework', name: 'spring-beans', version: '3.0.5.RELEASE'
     compile group: 'org.springframework', name: 'spring-context', version: '3.0.5.RELEASE'
     compile group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13'
     compile group: 'commons-io', name: 'commons-io', version: '2.4'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
-   // compile group: 'com.aspose', name: 'aspose-pdf', version: '16.11.0'
+    compile group: 'org.datavec', name: 'datavec-data-image', version: '0.4.0'
+    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+
 }
 
 test{

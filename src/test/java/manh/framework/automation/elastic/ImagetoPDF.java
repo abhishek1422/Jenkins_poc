@@ -10,8 +10,8 @@ public class ImagetoPDF {
 
     public static void PDFConvertor() {
         Document document = new Document();
-        String input = "C:/Users/anagpurkar/Desktop/test_automation-master/dashboardEI-JOURNAL-ENTRY-COUNT-STATISTICS-BY-ENDPOINT.jpg"; // .gif and .jpg are ok too!
-        String output = "C:/Users/anagpurkar/Desktop/test_automation-master/dashboard.pdf";
+        String input = "C:/Program Files (x86)/Jenkins/workspace/BuildandReport_gradle/dashboardEI-JOURNAL-ENTRY-COUNT-STATISTICS-BY-ENDPOINT.jpg"; // .gif and .jpg are ok too!
+        String output = "C:/Program Files (x86)/Jenkins/workspace/BuildandReport_gradle/dashboard.pdf";
         try {
             FileOutputStream fos = new FileOutputStream(output);
             PdfWriter writer = PdfWriter.getInstance(document, fos);

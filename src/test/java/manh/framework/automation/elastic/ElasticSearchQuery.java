@@ -8,19 +8,22 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-public class ElasticSearchQuery{
-    ElasticConnectionFactory elasticConnectionFactory =new ElasticConnectionFactory();
+public class ElasticSearchQuery {
+    ElasticConnectionFactory elasticConnectionFactory = new ElasticConnectionFactory();
     RestHighLevelClient client;
     QueryBuilder query;
     AggregationBuilder aggs;
     String traceId;
     String errorMessage;
 
-    public ElasticSearchQuery() throws Exception{
-        this.client =elasticConnectionFactory.initiateConnection();
+    public ElasticSearchQuery() throws Exception {
+        this.client = elasticConnectionFactory.initiateConnection();
         //this.client=elasticConnectionFactory.getTransportClient();
     }
 
@@ -219,7 +222,7 @@ public class ElasticSearchQuery{
         searchBuilder.timeout(new TimeValue(60, TimeUnit.SECONDS));
         req.source(searchBuilder);
 
-        SearchResponse response=client.search(req);
+        SearchResponse response = client.search(req);
         /*JSONObject responseJSON = new JSONObject(response.toString());
 
 
@@ -323,32 +326,67 @@ public class ElasticSearchQuery{
 
     }
 
-    public String kibanaDashBoradID_Rest(String var) throws Exception {
+    public JSONObject kibanaDashBoradID_Rest(ArrayList<String> array) throws Exception {
 
-        this.query = QueryBuilders
-                .boolQuery()
-                .must(
-                        QueryBuilders
-                                .matchQuery("_type", "dashboard")
+        HashMap<String, String> map = new HashMap<String, String>();
+        for (String var : array) {
 
-                )
-                .must(
-                        QueryBuilders
-                                .matchQuery("_id", var)
+            this.query = QueryBuilders
+                    .boolQuery()
+                    .must(
+                            QueryBuilders
+                                    .matchQuery("_type", "dashboard")
 
-                );
+                    )
+                    .must(
+                            QueryBuilders
+                                    .matchQuery("_id", var)
 
-        SearchRequest req = new SearchRequest(".kibana");
+                    );
+
+            SearchRequest req = new SearchRequest(".kibana");
 
 
-        SearchSourceBuilder searchBuilder = new SearchSourceBuilder();
-        searchBuilder.query(query);
-        searchBuilder.from(0);
-        searchBuilder.size(1);
-        req.source(searchBuilder);
+            SearchSourceBuilder searchBuilder = new SearchSourceBuilder();
+            searchBuilder.query(query);
+            searchBuilder.from(0);
+            searchBuilder.size(1);
+            req.source(searchBuilder);
 
-        SearchResponse response = client.search(req);
-        return response.toString();
+            SearchResponse response = client.search(req);
+            String json = response.toString();
+
+            JSONObject jsonObject = new JSONObject(json);
+            JSONObject hits = (JSONObject) jsonObject.get("hits");
+            JSONArray hitsInner = (JSONArray) hits.get("hits");
+            JSONObject idValue = (JSONObject) hitsInner.get(0);
+            String id = idValue.get("_id").toString();
+            map.put(var, id);
+
+        }
+
+        JSONArray dashboardJsonList = new JSONArray();
+
+        Set entrySet = map.entrySet();
+
+        // Obtaining an iterator for the entry set
+        Iterator it = entrySet.iterator();
+int j=1;
+        // Iterate through HashMap entries(Key-Value pairs)
+        while (it.hasNext()) {
+
+            Map.Entry me = (Map.Entry) it.next();
+            JSONObject dashBoardNames = new JSONObject();
+            dashBoardNames.put("dashboardName"+j, me.getKey().toString());
+            dashBoardNames.put("dashboardID"+j, me.getValue().toString());
+            dashboardJsonList.put(dashBoardNames);
+        j++;}
+
+        JSONObject DashboardInfo = new JSONObject();
+        DashboardInfo.put("dashboardInfo", dashboardJsonList);
+       // System.out.println(DashboardInfo);
+        return DashboardInfo;
+
 
     }
 

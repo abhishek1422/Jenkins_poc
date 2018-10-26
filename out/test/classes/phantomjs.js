@@ -1,8 +1,7 @@
-var json = require('C:/Users/anagpurkar/Desktop/test_automation-master/src/test/resources/jsonOutput.json');
-
-var id=json.hits.hits[0]._id;
-console.log(id);
-
+var json = require('C:/Users/anagpurkar/Desktop/Artifact_id_1/src/test/resources/jsonOutput.json');
+var id=json.dashboardInfo[0].dashboardID1;
+document.write(id);
+/*
 var url ='http://logs.adds.manhdev.com/app/kibana#/dashboard/'+id+'?_g=()';
 
 var page = require('webpage').create();
@@ -24,4 +23,8 @@ page.open(url, function (status) {
             phantom.exit();
         }, waitTime);
     }
+    }
 });
+
+*/
+
